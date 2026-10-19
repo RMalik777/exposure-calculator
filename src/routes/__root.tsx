@@ -15,7 +15,7 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: "Exposure stop calculator",
 			},
 		],
 		links: [
@@ -28,10 +28,19 @@ export const Route = createRootRoute({
 	shellComponent: RootDocument,
 });
 
+// Follow the OS light/dark setting before first paint.
+const THEME_SCRIPT = `(() => {
+	const media = window.matchMedia("(prefers-color-scheme: dark)");
+	const apply = () => document.documentElement.classList.toggle("dark", media.matches);
+	apply();
+	media.addEventListener("change", apply);
+})();`;
+
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
+				<script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
 				<HeadContent />
 			</head>
 			<body>
