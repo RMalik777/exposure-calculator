@@ -2,6 +2,9 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
+import { SiteFooter } from "#/components/site-footer";
+import { ThemeProvider } from "#/components/theme-provider";
+
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -28,23 +31,19 @@ export const Route = createRootRoute({
 	shellComponent: RootDocument,
 });
 
-// Follow the OS light/dark setting before first paint.
-const THEME_SCRIPT = `(() => {
-	const media = window.matchMedia("(prefers-color-scheme: dark)");
-	const apply = () => document.documentElement.classList.toggle("dark", media.matches);
-	apply();
-	media.addEventListener("change", apply);
-})();`;
-
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
-				<script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
 				<HeadContent />
 			</head>
 			<body>
-				{children}
+				<ThemeProvider>
+					<div className="flex min-h-svh flex-col">
+						<div className="flex-1">{children}</div>
+						<SiteFooter />
+					</div>
+				</ThemeProvider>
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",

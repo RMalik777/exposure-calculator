@@ -4,6 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CompensationTable } from "#/components/compensation-table";
 import { PostAdjustment } from "#/components/post-adjustment";
 import { SettingsComparison, complete, otherSide } from "#/components/settings-comparison";
+import { ThemeToggle } from "#/components/theme-toggle";
 import type { DraftSettings, Side } from "#/components/settings-comparison";
 import { compensate, formatStops, stopUnit } from "#/lib/exposure";
 
@@ -24,7 +25,10 @@ function Home() {
 
 	return (
 		<main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-6 md:px-8 md:py-12">
-			<h1 className="font-heading text-lg font-medium">Exposure stop calculator</h1>
+			<header className="flex items-center justify-between gap-4">
+				<h1 className="font-heading text-lg font-medium">Exposure stop calculator</h1>
+				<ThemeToggle />
+			</header>
 
 			<SettingsComparison
 				drafts={drafts}
